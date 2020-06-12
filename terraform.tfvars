@@ -68,13 +68,37 @@ subnets = {
   }
 
 #---------------------------------------------------------
+## Cloud init user data
+#---------------------------------------------------------
+cloud_init_data = {
+     user_data = {
+       base64_encode = false
+       gzip = false
+       content = <<EOF
+    #cloud-config
+    package_update: true
+    package_upgrade: true
+    write_files:
+      - content: |
+          HELLO WORLD
+        path: /root/message
+    runcmd:
+      - 'curl -sL https://ibm.biz/idt-installer | bash'
+    packages:
+      - htop
+    EOF
+    }
+  }
+
+#---------------------------------------------------------
 ## Servers
 #---------------------------------------------------------
    servers = [
      {
        count = 1
        name = "fss-server"
-       image = "04f4c424-a90d-4c2b-a77f-db67ff9b1629"
+       # ibm-ubuntu-18-04-1-minimal-amd64-1
+       image = "r006-14140f94-fcc4-11e9-96e7-a72723715315"
        profile = "bx2-4x16"
        subnet = "us-south-1-subnet-fss"
        zone = "us-south-1"
@@ -82,7 +106,7 @@ subnets = {
        network_interfaces = {}
        security_groups = ["custom-image-sg-fss"]
        volumes = []
-       user_data = ""
+       user_data = "user_data"
      }
    ]
 
