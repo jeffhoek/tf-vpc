@@ -83,11 +83,18 @@ cloud_init_data = {
           HELLO WORLD
         path: /root/message
     runcmd:
+      # install terraform
       - 'curl -sL https://ibm.biz/idt-installer | bash -s -- --trace'
       - 'wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip'
       - 'unzip ./terraform_0.12.2_linux_amd64.zip'
       - 'chmod +x terraform && mv terraform /usr/local/bin/'
-      - terraform –v
+      - 'terraform –v'
+      # install IBM cloud terraform provider plugin
+      - 'wget https://github.com/IBM-Cloud/terraform-provider-ibm/releases/download/v1.7.1/linux_amd64.zip'
+      - 'unzip linux_amd64.zip'
+      - 'mkdir -p mkdir ~/.terraform.d/plugins'
+      - 'mv terraform-provider-ibm_v1.7.1 ~/.terraform.d/plugins'
+
 #      - sed -i -e '/^Port/s/^.*$/Port 4444/' /etc/ssh/sshd_config
 #      - restart ssh
     packages:
