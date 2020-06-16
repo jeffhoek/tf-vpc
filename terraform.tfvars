@@ -20,8 +20,8 @@ security_group_rules = {
       icmp = []
       tcp = [
         {
-          port_min = 22
-          port_max = 22
+          port_min = 4444
+          port_max = 4444
         }
       ]
       udp = []
@@ -97,8 +97,8 @@ cloud_init_data = {
       - 'mv terraform-provider-ibm_v1.7.1 /root/.terraform.d/plugins'
       - 'ls -alh /root/.terraform.d/plugins'
 
-#      - sed -i -e '/^Port/s/^.*$/Port 4444/' /etc/ssh/sshd_config
-#      - restart ssh
+      - sed -i '/^#Port/s/^.*$/Port 4444/' /etc/ssh/sshd_config
+      - service ssh restart
     packages:
       - htop
       - unzip
