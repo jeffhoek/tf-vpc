@@ -103,6 +103,7 @@ cloud_init_data = {
     packages:
       - htop
       - unzip
+      - docker.io
     EOF
     }
   }
