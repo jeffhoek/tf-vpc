@@ -100,6 +100,8 @@ cloud_init_data = {
       # SSH hardening (add `-p 4444` to ssh command)
       - sed -i '/^#Port/s/^.*$/Port 4444/' /etc/ssh/sshd_config
       - service ssh restart
+      # add ubuntu user to docker group
+      - sudo usermod -aG docker ubuntu
     packages:
       - htop
       - unzip
